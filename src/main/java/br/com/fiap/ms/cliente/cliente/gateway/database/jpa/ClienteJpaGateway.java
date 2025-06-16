@@ -1,4 +1,6 @@
 package br.com.fiap.ms.cliente.cliente.gateway.database.jpa;
 
-public class ClienteJpaGateway {
+import br.com.fiap.ms.cliente.cliente.gateway.ClienteGateway;
+
+public class ClienteJpaGateway implements ClienteGateway {
 }
