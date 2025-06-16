@@ -26,12 +26,12 @@ CREATE TABLE cliente (
     nome VARCHAR(255) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
     data_nascimento DATE NOT NULL,
-    endereco UUID NOT NULL,
+    endereco_id UUID NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     data_ultima_alteracao TIMESTAMP,
 
     CONSTRAINT uk_cliente_cpf UNIQUE (cpf),
-    CONSTRAINT fk_cliente_endereco FOREIGN KEY (endereco) REFERENCES endereco(id)
+    CONSTRAINT fk_cliente_endereco FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
 
 -- Índice adicional no CPF para facilitar buscas
