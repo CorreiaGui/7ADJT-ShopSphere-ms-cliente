@@ -10,6 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Endereco {
 
     private UUID id;

@@ -11,9 +11,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Cliente {
 
     private UUID id;
+
+    private String cpf;
 
     private String nome;
 
