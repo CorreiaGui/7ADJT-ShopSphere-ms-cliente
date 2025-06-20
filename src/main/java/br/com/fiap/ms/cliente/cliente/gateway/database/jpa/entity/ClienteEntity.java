@@ -7,17 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static jakarta.persistence.FetchType.LAZY;
-
-//id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-//nome VARCHAR(255) NOT NULL,
-//cpf VARCHAR(11) NOT NULL,
-//data_nascimento DATE NOT NULL,
-//endereco UUID NOT NULL,
-//data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//data_ultima_alteracao TIMESTAMP,
 
 @Getter
 @Setter
@@ -45,8 +38,8 @@ public class ClienteEntity {
     private LocalDate dataNascimento;
 
     @Column(name = "data_criacao", nullable = false)
-    private LocalDate dataCriacao = LocalDate.now();
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
     @Column(name = "data_ultima_alteracao")
-    private LocalDate dataUltimaAlteracao = LocalDate.now();
+    private LocalDateTime dataUltimaAlteracao = LocalDateTime.now();
 }

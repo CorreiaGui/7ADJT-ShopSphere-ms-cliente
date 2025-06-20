@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -40,8 +40,8 @@ public class EnderecoEntity {
     private String cidade;
 
     @Column(name = "data_criacao", nullable = false)
-    private LocalDate dataCriacao = LocalDate.now();
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
     @Column(name = "data_ultima_alteracao")
-    private LocalDate dataUltimaAlteracao = LocalDate.now();
+    private LocalDateTime dataUltimaAlteracao = LocalDateTime.now();
 }
