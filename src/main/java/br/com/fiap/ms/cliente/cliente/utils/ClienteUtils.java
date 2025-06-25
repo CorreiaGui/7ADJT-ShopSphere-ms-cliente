@@ -34,20 +34,6 @@ public class ClienteUtils {
             .build();
     }
 
-    /*public static ClienteJson convertToClienteJson(Cliente cliente) {
-        return ClienteJson.builder()
-                .id(cliente.getId())
-                .nome(cliente.getNome())
-                .dataNascimento(cliente.getDataNascimento())
-                .rua(cliente.getEndereco().getRua())
-                .numero(cliente.getEndereco().getNumero())
-                .complemento(cliente.getEndereco().getComplemento())
-                .bairro(cliente.getEndereco().getBairro())
-                .cidade(cliente.getEndereco().getCidade())
-                .dataCriacao(cliente.getDataCriacao())
-                .dataUltimaAlteracao(cliente.getDataUltimaAlteracao())
-            .build();
-    }*/
     public static ClienteJson convertToClienteJson(Cliente cliente){
         return new ClienteJson(
             cliente.getId(),

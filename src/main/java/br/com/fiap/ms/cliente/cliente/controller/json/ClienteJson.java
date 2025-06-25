@@ -13,14 +13,14 @@ import java.util.UUID;
 @Builder
 @ToString*/
 public record ClienteJson(
-        UUID id,
-        String nome,
-        LocalDate dataNascimento,
-        String rua,
-        Integer numero,
-        String complemento,
-        String bairro,
-        String cidade,
-        LocalDateTime dataCriacao,
-        LocalDateTime dataUltimaAlteracao
+    UUID id,
+    String nome,
+    LocalDate dataNascimento,
+    String rua,
+    Integer numero,
+    String complemento,
+    String bairro,
+    String cidade,
+    LocalDateTime dataCriacao,
+    LocalDateTime dataUltimaAlteracao
 ) {}
