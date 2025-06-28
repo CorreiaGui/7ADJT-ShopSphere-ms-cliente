@@ -30,5 +30,4 @@ public class Endereco {
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
     private LocalDateTime dataUltimaAlteracao;
-
 }
