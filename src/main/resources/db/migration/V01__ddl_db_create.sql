@@ -22,9 +22,8 @@ CREATE TABLE endereco (
 
 -- Tabela de clientes
 CREATE TABLE cliente (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    cpf VARCHAR(11) PRIMARY KEY NOT NULL,
     nome VARCHAR(255) NOT NULL,
-    cpf VARCHAR(11) NOT NULL,
     data_nascimento DATE NOT NULL,
     endereco_id UUID NOT NULL,
     data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

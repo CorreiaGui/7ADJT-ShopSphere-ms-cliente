@@ -14,8 +14,6 @@ import java.util.UUID;
 @ToString
 public class Cliente {
 
-    private UUID id;
-
     private String cpf;
 
     private String nome;

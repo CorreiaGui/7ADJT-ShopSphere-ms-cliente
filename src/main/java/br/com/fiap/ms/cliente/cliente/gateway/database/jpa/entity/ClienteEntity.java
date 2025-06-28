@@ -19,10 +19,10 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Table(name = "cliente", schema = "ms_cliente")
 public class ClienteEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, unique = true)
-    private UUID id;
+    @Column(name = "cpf", nullable = false, unique = true)
+    private String cpf;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "endereco_id", nullable = false)
@@ -30,9 +30,6 @@ public class ClienteEntity {
 
     @Column(name = "nome", nullable = false)
     private String nome;
-
-    @Column(name = "cpf", nullable = false)
-    private String cpf;
 
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;

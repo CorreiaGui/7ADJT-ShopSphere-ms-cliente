@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @ToString*/
 public record ClienteJson(
-    UUID id,
+    String cpf,
     String nome,
     LocalDate dataNascimento,
     String rua,

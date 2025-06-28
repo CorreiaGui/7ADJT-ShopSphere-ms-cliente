@@ -12,7 +12,7 @@ public class ClienteUtils {
 
     public static Cliente convertToCliente(ClienteEntity clienteEntity){
         return Cliente.builder()
-                .id(clienteEntity.getId())
+                .cpf(clienteEntity.getCpf())
                 .nome(clienteEntity.getNome())
                 .dataNascimento(clienteEntity.getDataNascimento())
                 .endereco(convertToEndereco(clienteEntity.getEndereco()))
@@ -36,7 +36,7 @@ public class ClienteUtils {
 
     public static ClienteJson convertToClienteJson(Cliente cliente){
         return new ClienteJson(
-            cliente.getId(),
+            cliente.getCpf(),
             cliente.getNome(),
             cliente.getDataNascimento(),
             cliente.getEndereco().getRua(),
