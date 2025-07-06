@@ -53,7 +53,12 @@ public class ClienteUtils {
 
     public static Cliente convertToCliente(ClienteJsonRequest clienteJsonRequest) {
         Endereco endereco = Endereco.builder()
-                .id(clienteJsonRequest.idEndereco())
+                .rua(clienteJsonRequest.enderecoJsonRequest().rua())
+                .numero(clienteJsonRequest.enderecoJsonRequest().numero())
+                .cep(clienteJsonRequest.enderecoJsonRequest().cep())
+                .complemento(clienteJsonRequest.enderecoJsonRequest().complemento())
+                .bairro(clienteJsonRequest.enderecoJsonRequest().bairro())
+                .cidade(clienteJsonRequest.enderecoJsonRequest().cidade())
             .build();
         return Cliente.builder()
                 .cpf(clienteJsonRequest.cpf())

@@ -21,7 +21,7 @@ public class ClienteEntity {
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", nullable = false, foreignKey = @ForeignKey(name = "fk_cliente_endereco"))
     private EnderecoEntity endereco;
 

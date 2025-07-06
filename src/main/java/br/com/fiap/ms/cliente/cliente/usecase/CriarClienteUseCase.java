@@ -15,9 +15,9 @@ public class CriarClienteUseCase {
     public final EnderecoGateway enderecoGateway;
 
     public Cliente criarCliente(Cliente cliente) {
-        Endereco endereco = enderecoGateway.buscarEnderecoPorId(cliente.getEndereco().getId())
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
-        cliente.setEndereco(endereco);
+        /*Endereco endereco = enderecoGateway.criarEndereco(cliente.getEndereco())
+                .orElseThrow(() -> new RuntimeException("Erro ao criar endereco"));
+        cliente.setEndereco(endereco);*/
         return clienteGateway.criarCliente(cliente)
                 .orElseThrow(() -> new RuntimeException("Erro ao criar cliente"));
     }
