@@ -10,4 +10,6 @@ public interface  ClienteGateway {
     Optional<Cliente> buscarClientePorCpf(String cpf);
     List<Cliente> buscarClientes(int page, int size);
     Optional<Cliente> criarCliente(Cliente cliente);
+    Optional<Cliente> alterarClientePorCpf(String cpf, Cliente cliente);
+    void excluirClientePorCpf(String cpf);
 }

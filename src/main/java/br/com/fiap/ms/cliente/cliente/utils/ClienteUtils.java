@@ -1,9 +1,6 @@
 package br.com.fiap.ms.cliente.cliente.utils;
 
-import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonRequest;
-import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonResponse;
-import br.com.fiap.ms.cliente.cliente.controller.json.EnderecoJsonRequest;
-import br.com.fiap.ms.cliente.cliente.controller.json.EnderecoJsonResponse;
+import br.com.fiap.ms.cliente.cliente.controller.json.*;
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
 import br.com.fiap.ms.cliente.cliente.domain.Endereco;
 import br.com.fiap.ms.cliente.cliente.exception.ResourceNotFoundException;
@@ -66,6 +63,24 @@ public class ClienteUtils {
                 .dataNascimento(clienteJsonRequest.dataNascimento())
                 .endereco(endereco)
             .build();
+    }
+
+    public static Cliente convertToCliente(AtualizarClienteJsonRequest clienteJsonRequest) {
+        Endereco endereco = Endereco.builder()
+                .id(clienteJsonRequest.enderecoJsonRequest().id())
+                .rua(clienteJsonRequest.enderecoJsonRequest().rua())
+                .numero(clienteJsonRequest.enderecoJsonRequest().numero())
+                .cep(clienteJsonRequest.enderecoJsonRequest().cep())
+                .complemento(clienteJsonRequest.enderecoJsonRequest().complemento())
+                .bairro(clienteJsonRequest.enderecoJsonRequest().bairro())
+                .cidade(clienteJsonRequest.enderecoJsonRequest().cidade())
+            .build();
+        return Cliente.builder()
+                .cpf(clienteJsonRequest.cpf())
+                .nome(clienteJsonRequest.nome())
+                .dataNascimento(clienteJsonRequest.dataNascimento())
+                .endereco(endereco)
+                .build();
     }
 
     public static Endereco convertToEndereco(EnderecoJsonRequest enderecoJsonRequest) {

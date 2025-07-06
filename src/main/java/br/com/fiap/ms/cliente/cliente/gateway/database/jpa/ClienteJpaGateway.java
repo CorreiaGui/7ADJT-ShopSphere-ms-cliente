@@ -39,4 +39,17 @@ public class ClienteJpaGateway implements ClienteGateway {
         var clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente));
         return Optional.ofNullable(ClienteUtils.convertToCliente(clienteEntity));
     }
+
+    @Override
+    public Optional<Cliente> alterarClientePorCpf(String cpf, Cliente cliente) {
+        ClienteEntity clienteEntity = clienteRepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        clienteEntity.setCpf(cpf);
+        ClienteEntity clienteAtualizado = clienteRepository.save(clienteEntity);
+        return Optional.ofNullable(ClienteUtils.convertToCliente(clienteAtualizado));
+    }
+
+    @Override
+    public void excluirClientePorCpf(String cpf) {
+        clienteRepository.deleteById(cpf);
+    }
 }

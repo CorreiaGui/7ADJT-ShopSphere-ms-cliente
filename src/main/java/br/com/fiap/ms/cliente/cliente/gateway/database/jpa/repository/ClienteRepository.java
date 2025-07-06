@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<ClienteEntity, String> {
     public Optional<ClienteEntity> findByCpf(String cpf);
+    public void deleteByCpf(String cpf);
 }

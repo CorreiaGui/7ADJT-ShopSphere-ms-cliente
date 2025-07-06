@@ -1,11 +1,10 @@
 package br.com.fiap.ms.cliente.cliente.controller;
 
+import br.com.fiap.ms.cliente.cliente.controller.json.AtualizarClienteJsonRequest;
 import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonRequest;
 import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonResponse;
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
-import br.com.fiap.ms.cliente.cliente.usecase.BuscarClientePorCpfUseCase;
-import br.com.fiap.ms.cliente.cliente.usecase.BuscarClientesUseCase;
-import br.com.fiap.ms.cliente.cliente.usecase.CriarClienteUseCase;
+import br.com.fiap.ms.cliente.cliente.usecase.*;
 import br.com.fiap.ms.cliente.cliente.utils.ClienteUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,8 @@ public class ClienteController {
     private final BuscarClientePorCpfUseCase buscarClientePorCpfUseCase;
     private final BuscarClientesUseCase buscarClientesUseCase;
     private final CriarClienteUseCase criarClienteUseCase;
+    private final AlterarClientePorCpfUseCase atualizarClientePorCpfUseCase;
+    private final ExcluirClientePorCpfUseCase excluirClientePorCpfUseCase;
 
     @GetMapping("/{cpf}")
     public ResponseEntity<ClienteJsonResponse> buscarClientePorCpf(@PathVariable("cpf") String cpf) {
@@ -58,5 +59,22 @@ public class ClienteController {
         Cliente novoCliente = criarClienteUseCase.criarCliente(cliente);
         log.info("Cliente criado com sucesso: {}", novoCliente);
         return ResponseEntity.status(201).body(convertToClienteJsonResponse(novoCliente));
+    }
+
+    @PutMapping("/{cpf}")
+    public ResponseEntity<ClienteJsonResponse> alterarCliente(@PathVariable("cpf") String cpf, @RequestBody AtualizarClienteJsonRequest clienteJsonRequest) {
+        log.info("POST | {} | Iniciado alteracao de cliente | clienteJson: {}", V1_CLIENTES, clienteJsonRequest);
+        Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
+        Cliente clienteAtualizado = atualizarClientePorCpfUseCase.alterarClientePorCpf(cpf, cliente);
+        log.info("Cliente alterado com sucesso: {}", clienteAtualizado);
+        return ResponseEntity.status(201).body(convertToClienteJsonResponse(clienteAtualizado));
+    }
+
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<Void> excluirCliente(@PathVariable("cpf") String cpf) {
+        log.info("GET | {} | Iniciada exclusao de cliente pelo CPF | CPF: {}", V1_CLIENTES, cpf);
+        excluirClientePorCpfUseCase.excluirClientePorCpf(cpf);
+        log.info("GET | {} | Finalizada exclusao de cliente pelo CPF | CPF: {}", V1_CLIENTES, cpf);
+        return ResponseEntity.ok().build();
     }
 }
