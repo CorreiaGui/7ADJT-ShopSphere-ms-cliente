@@ -83,6 +83,7 @@ public class ClienteUtils {
                     .bairro(enderecoEntity.get().getBairro())
                     .cidade(enderecoEntity.get().getCidade())
                     .cep(enderecoEntity.get().getCep())
+                    .complemento(enderecoEntity.get().getComplemento())
                     .dataCriacao(enderecoEntity.get().getDataCriacao())
                     .dataUltimaAlteracao(enderecoEntity.get().getDataUltimaAlteracao())
                 .build();
@@ -99,6 +100,7 @@ public class ClienteUtils {
                     .bairro(enderecoEntity.getBairro())
                     .cidade(enderecoEntity.getCidade())
                     .cep(enderecoEntity.getCep())
+                    .complemento(enderecoEntity.getComplemento())
                     .dataCriacao(enderecoEntity.getDataCriacao())
                     .dataUltimaAlteracao(enderecoEntity.getDataUltimaAlteracao())
                 .build();
