@@ -1,9 +1,11 @@
 package br.com.fiap.ms.cliente.cliente.gateway.database.jpa;
 
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
+import br.com.fiap.ms.cliente.cliente.domain.Endereco;
 import br.com.fiap.ms.cliente.cliente.gateway.ClienteGateway;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.repository.ClienteRepository;
+import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.repository.EnderecoRepository;
 import br.com.fiap.ms.cliente.cliente.utils.ClienteUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,13 @@ public class ClienteJpaGateway implements ClienteGateway {
     @Override
     public List<Cliente> buscarClientes(int page, int size) {
         Page<ClienteEntity> clientesEntity = clienteRepository.findAll(PageRequest.of(page, size));
-        return clientesEntity.map(ClienteUtils::convertToCliente).getContent();
+        List<Cliente> list = clientesEntity.map(ClienteUtils::convertToCliente).getContent();
+        return list;
+    }
+
+    @Override
+    public Optional<Cliente> criarCliente(Cliente cliente) {
+        var clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente));
+        return Optional.ofNullable(ClienteUtils.convertToCliente(clienteEntity));
     }
 }

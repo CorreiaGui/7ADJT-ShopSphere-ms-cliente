@@ -1,52 +1,161 @@
 package br.com.fiap.ms.cliente.cliente.utils;
 
-import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJson;
+import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonRequest;
+import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonResponse;
+import br.com.fiap.ms.cliente.cliente.controller.json.EnderecoJsonRequest;
+import br.com.fiap.ms.cliente.cliente.controller.json.EnderecoJsonResponse;
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
 import br.com.fiap.ms.cliente.cliente.domain.Endereco;
+import br.com.fiap.ms.cliente.cliente.exception.ResourceNotFoundException;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.entity.EnderecoEntity;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import static br.com.fiap.ms.cliente.cliente.utils.ClienteConstants.ID_INVALIDO;
+import static java.util.regex.Pattern.matches;
 
 public class ClienteUtils {
 
     private ClienteUtils() {}
+    private static final String REGEX_UUID = "^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
 
-    public static Cliente convertToCliente(ClienteEntity clienteEntity){
-        return Cliente.builder()
-                .cpf(clienteEntity.getCpf())
-                .nome(clienteEntity.getNome())
-                .dataNascimento(clienteEntity.getDataNascimento())
-                .endereco(convertToEndereco(clienteEntity.getEndereco()))
-                .dataCriacao(clienteEntity.getDataCriacao())
-                .dataUltimaAlteracao(clienteEntity.getDataUltimaAlteracao())
+    public static Optional<Cliente> convertToCliente(Optional<ClienteEntity> clienteEntity) {
+        if(clienteEntity.isPresent()) {
+            return Optional.of(
+                Cliente.builder()
+                    .cpf(clienteEntity.get().getCpf())
+                    .nome(clienteEntity.get().getNome())
+                    .dataNascimento(clienteEntity.get().getDataNascimento())
+                    .endereco(convertToEndereco(Optional.ofNullable(clienteEntity.get().getEndereco())))
+                    .dataCriacao(clienteEntity.get().getDataCriacao())
+                    .dataUltimaAlteracao(clienteEntity.get().getDataUltimaAlteracao())
+                .build()
+            );
+        }
+        return Optional.empty();
+    }
+
+    public static Cliente convertToCliente(ClienteEntity clienteEntity) {
+        if (clienteEntity != null) {
+            return Cliente.builder()
+                    .cpf(clienteEntity.getCpf())
+                    .nome(clienteEntity.getNome())
+                    .dataNascimento(clienteEntity.getDataNascimento())
+                    .endereco(convertToEndereco(Optional.ofNullable(clienteEntity.getEndereco())))
+                    .dataCriacao(clienteEntity.getDataCriacao())
+                    .dataUltimaAlteracao(clienteEntity.getDataUltimaAlteracao())
+                .build();
+        }
+        return null;
+    }
+
+    public static Cliente convertToCliente(ClienteJsonRequest clienteJsonRequest) {
+        Endereco endereco = Endereco.builder()
+                .id(clienteJsonRequest.idEndereco())
             .build();
+        return Cliente.builder()
+                .cpf(clienteJsonRequest.cpf())
+                .nome(clienteJsonRequest.nome())
+                .dataNascimento(clienteJsonRequest.dataNascimento())
+                .endereco(endereco)
+            .build();
+    }
+
+    public static Endereco convertToEndereco(EnderecoJsonRequest enderecoJsonRequest) {
+        return Endereco.builder()
+                .rua(enderecoJsonRequest.rua())
+                .numero(enderecoJsonRequest.numero())
+                .cep(enderecoJsonRequest.cep())
+                .complemento(enderecoJsonRequest.complemento())
+                .bairro(enderecoJsonRequest.bairro())
+                .cidade(enderecoJsonRequest.cidade())
+            .build();
+    }
+
+    public static Endereco convertToEndereco(Optional<EnderecoEntity> enderecoEntity) {
+        if(enderecoEntity.isPresent()) {
+            return Endereco.builder()
+                    .id(enderecoEntity.get().getId())
+                    .rua(enderecoEntity.get().getRua())
+                    .numero(enderecoEntity.get().getNumero())
+                    .bairro(enderecoEntity.get().getBairro())
+                    .cidade(enderecoEntity.get().getCidade())
+                    .cep(enderecoEntity.get().getCep())
+                    .dataCriacao(enderecoEntity.get().getDataCriacao())
+                    .dataUltimaAlteracao(enderecoEntity.get().getDataUltimaAlteracao())
+                .build();
+        }
+        return null;
     }
 
     public static Endereco convertToEndereco(EnderecoEntity enderecoEntity) {
-        return Endereco.builder()
-                .id(enderecoEntity.getId())
-                .rua(enderecoEntity.getRua())
-                .numero(enderecoEntity.getNumero())
-                .bairro(enderecoEntity.getBairro())
-                .cidade(enderecoEntity.getCidade())
-                .cep(enderecoEntity.getCep())
-                .dataCriacao(enderecoEntity.getDataCriacao())
-                .dataUltimaAlteracao(enderecoEntity.getDataUltimaAlteracao())
-            .build();
+        if (enderecoEntity != null) {
+            return Endereco.builder()
+                    .id(enderecoEntity.getId())
+                    .rua(enderecoEntity.getRua())
+                    .numero(enderecoEntity.getNumero())
+                    .bairro(enderecoEntity.getBairro())
+                    .cidade(enderecoEntity.getCidade())
+                    .cep(enderecoEntity.getCep())
+                    .dataCriacao(enderecoEntity.getDataCriacao())
+                    .dataUltimaAlteracao(enderecoEntity.getDataUltimaAlteracao())
+                .build();
+        }
+        return null;
     }
 
-    public static ClienteJson convertToClienteJson(Cliente cliente){
-        return new ClienteJson(
-            cliente.getCpf(),
-            cliente.getNome(),
-            cliente.getDataNascimento(),
-            cliente.getEndereco().getRua(),
-            cliente.getEndereco().getNumero(),
-            cliente.getEndereco().getComplemento(),
-            cliente.getEndereco().getBairro(),
-            cliente.getEndereco().getCidade(),
-            cliente.getDataCriacao(),
-            cliente.getDataUltimaAlteracao()
+    public static ClienteJsonResponse convertToClienteJsonResponse(Cliente cliente){
+        ClienteJsonResponse clienteJsonResponse = new ClienteJsonResponse(
+                cliente.getCpf(),
+                cliente.getNome(),
+                cliente.getDataNascimento(),
+                cliente.getDataCriacao(),
+                cliente.getDataUltimaAlteracao(),
+                convertToEnderecoJsonResponse(cliente.getEndereco())
         );
+        return clienteJsonResponse;
     }
 
+    public static EnderecoJsonResponse convertToEnderecoJsonResponse(Endereco endereco){
+        EnderecoJsonResponse enderecoJsonResponse = new EnderecoJsonResponse(
+            endereco.getId(),
+            endereco.getRua(),
+            endereco.getNumero(),
+            endereco.getCep(),
+            endereco.getComplemento(),
+            endereco.getBairro(),
+            endereco.getCidade(),
+            endereco.getDataCriacao(),
+            endereco.getDataUltimaAlteracao()
+        );
+        return enderecoJsonResponse;
+    }
+
+    public static ClienteEntity convertToClienteEntity(Cliente cliente) {
+        ClienteEntity clienteEntity = new ClienteEntity();
+        clienteEntity.setCpf(cliente.getCpf());
+        clienteEntity.setNome(cliente.getNome());
+        clienteEntity.setDataNascimento(cliente.getDataNascimento());
+        clienteEntity.setEndereco(convertToEnderecoEntity(cliente.getEndereco()));
+        return clienteEntity;
+    }
+
+    public static EnderecoEntity convertToEnderecoEntity(Endereco endereco) {
+        EnderecoEntity enderecoEntity = new EnderecoEntity();
+        enderecoEntity.setRua(endereco.getRua());
+        enderecoEntity.setNumero(endereco.getNumero());
+        enderecoEntity.setCep(endereco.getCep());
+        enderecoEntity.setComplemento(endereco.getComplemento());
+        enderecoEntity.setBairro(endereco.getBairro());
+        enderecoEntity.setCidade(endereco.getCidade());
+        return enderecoEntity;
+    }
+
+    public static void uuidValidator(UUID id) {
+        if (!matches(REGEX_UUID, id.toString())) {
+            throw new ResourceNotFoundException(ID_INVALIDO);
+        }
+    }
 }
