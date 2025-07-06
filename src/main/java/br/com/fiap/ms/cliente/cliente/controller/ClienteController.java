@@ -30,15 +30,16 @@ public class ClienteController {
 
     @GetMapping("/{cpf}")
     public ResponseEntity<ClienteJsonResponse> buscarClientePorCpf(@PathVariable("cpf") String cpf) {
-        log.info("GET | {} | Iniciado busca de clientes pelo CPF | CPF: {}", V1_CLIENTES, cpf);
+        log.info("GET | {} | Iniciada busca de clientes pelo CPF | CPF: {}", V1_CLIENTES, cpf);
         Cliente cliente = buscarClientePorCpfUseCase.buscarClientePorCpf(cpf);
         if (cliente == null) {
-            log.info("GET | {} | Iniciado busca de clientes pelo CPF | CPF: {}", V1_CLIENTES, cpf);
+            log.info("GET | {} | Finalizada busca de clientes pelo CPF | CPF: {} notFound", V1_CLIENTES, cpf);
             return ResponseEntity.notFound().build();
         }
         log.info("Cliente encontrado: {}", cliente);
         ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(cliente);
         log.info("clienteJson encontrado: {}", clienteJsonResponse);
+        log.info("GET | {} | Finalizada busca de clientes pelo CPF | CPF: {} {}", V1_CLIENTES, cpf, clienteJsonResponse);
         return ResponseEntity.ok(clienteJsonResponse);
     }
 
@@ -54,20 +55,22 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteJsonResponse> criarCliente(@RequestBody ClienteJsonRequest clienteJsonRequest) {
-        log.info("POST | {} | Iniciado criação de cliente | clienteJson: {}", V1_CLIENTES, clienteJsonRequest);
+        log.info("POST | {} | Iniciada criação de cliente | request: {}", V1_CLIENTES, clienteJsonRequest);
         Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
         Cliente novoCliente = criarClienteUseCase.criarCliente(cliente);
-        log.info("Cliente criado com sucesso: {}", novoCliente);
-        return ResponseEntity.status(201).body(convertToClienteJsonResponse(novoCliente));
+        ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(novoCliente);
+        log.info("POST | {} | Finalizada criação de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
+        return ResponseEntity.status(201).body(clienteJsonResponse);
     }
 
     @PutMapping("/{cpf}")
     public ResponseEntity<ClienteJsonResponse> alterarCliente(@PathVariable("cpf") String cpf, @RequestBody AtualizarClienteJsonRequest clienteJsonRequest) {
-        log.info("POST | {} | Iniciado alteracao de cliente | clienteJson: {}", V1_CLIENTES, clienteJsonRequest);
+        log.info("PUT | {} | Iniciada alteracao de cliente | request: {}", V1_CLIENTES, clienteJsonRequest);
         Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
         Cliente clienteAtualizado = atualizarClientePorCpfUseCase.alterarClientePorCpf(cpf, cliente);
-        log.info("Cliente alterado com sucesso: {}", clienteAtualizado);
-        return ResponseEntity.status(201).body(convertToClienteJsonResponse(clienteAtualizado));
+        ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(clienteAtualizado);
+        log.info("PUT | {} | Finalizada alteracao de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
+        return ResponseEntity.status(201).body(clienteJsonResponse);
     }
 
     @DeleteMapping("/{cpf}")
