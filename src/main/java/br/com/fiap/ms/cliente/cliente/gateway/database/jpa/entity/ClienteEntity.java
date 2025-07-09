@@ -32,8 +32,8 @@ public class ClienteEntity {
     private LocalDate dataNascimento;
 
     @Column(name = "data_criacao", nullable = false)
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+    private LocalDateTime dataCriacao;
 
     @Column(name = "data_ultima_alteracao")
-    private LocalDateTime dataUltimaAlteracao = LocalDateTime.now();
+    private LocalDateTime dataUltimaAlteracao;
 }

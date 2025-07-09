@@ -1,9 +1,7 @@
 package br.com.fiap.ms.cliente.cliente.usecase;
 
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
-import br.com.fiap.ms.cliente.cliente.domain.Endereco;
 import br.com.fiap.ms.cliente.cliente.gateway.ClienteGateway;
-import br.com.fiap.ms.cliente.cliente.gateway.EnderecoGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +10,8 @@ import org.springframework.stereotype.Service;
 public class CriarClienteUseCase {
 
     public final ClienteGateway clienteGateway;
-    public final EnderecoGateway enderecoGateway;
 
     public Cliente criarCliente(Cliente cliente) {
-        /*Endereco endereco = enderecoGateway.criarEndereco(cliente.getEndereco())
-                .orElseThrow(() -> new RuntimeException("Erro ao criar endereco"));
-        cliente.setEndereco(endereco);*/
         return clienteGateway.criarCliente(cliente)
                 .orElseThrow(() -> new RuntimeException("Erro ao criar cliente"));
     }

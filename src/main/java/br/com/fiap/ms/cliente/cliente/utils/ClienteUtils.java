@@ -7,6 +7,7 @@ import br.com.fiap.ms.cliente.cliente.exception.ResourceNotFoundException;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.ms.cliente.cliente.gateway.database.jpa.entity.EnderecoEntity;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -155,24 +156,38 @@ public class ClienteUtils {
         return enderecoJsonResponse;
     }
 
-    public static ClienteEntity convertToClienteEntity(Cliente cliente) {
-        ClienteEntity clienteEntity = new ClienteEntity();
-        clienteEntity.setCpf(cliente.getCpf());
-        clienteEntity.setNome(cliente.getNome());
-        clienteEntity.setDataNascimento(cliente.getDataNascimento());
-        clienteEntity.setEndereco(convertToEnderecoEntity(cliente.getEndereco()));
-        return clienteEntity;
+    public static ClienteEntity convertToClienteEntity(Cliente cliente, ClienteEntity clienteEntity) {
+        var clienteEntityFinal = new ClienteEntity();
+        if(clienteEntity != null && clienteEntity.getCpf() != null){
+            clienteEntityFinal.setCpf(clienteEntity.getCpf());
+            clienteEntityFinal.setDataCriacao(clienteEntity.getDataCriacao());
+            clienteEntityFinal.setDataUltimaAlteracao(LocalDateTime.now());
+        } else {
+            clienteEntityFinal.setCpf(cliente.getCpf());
+            clienteEntityFinal.setDataCriacao(LocalDateTime.now());
+        }
+        clienteEntityFinal.setNome(cliente.getNome());
+        clienteEntityFinal.setDataNascimento(cliente.getDataNascimento());
+        clienteEntityFinal.setEndereco(convertToEnderecoEntity(cliente.getEndereco(), clienteEntity != null ? clienteEntity.getEndereco(): null));
+        return clienteEntityFinal;
     }
 
-    public static EnderecoEntity convertToEnderecoEntity(Endereco endereco) {
-        EnderecoEntity enderecoEntity = new EnderecoEntity();
-        enderecoEntity.setRua(endereco.getRua());
-        enderecoEntity.setNumero(endereco.getNumero());
-        enderecoEntity.setCep(endereco.getCep());
-        enderecoEntity.setComplemento(endereco.getComplemento());
-        enderecoEntity.setBairro(endereco.getBairro());
-        enderecoEntity.setCidade(endereco.getCidade());
-        return enderecoEntity;
+    public static EnderecoEntity convertToEnderecoEntity(Endereco endereco, EnderecoEntity enderecoEntity) {
+        var enderecoEntityFinal = new EnderecoEntity();
+        if(enderecoEntity != null && enderecoEntity.getId() != null) {
+            enderecoEntityFinal.setId(enderecoEntity.getId());
+            enderecoEntityFinal.setDataCriacao(enderecoEntity.getDataCriacao());
+            enderecoEntityFinal.setDataUltimaAlteracao(LocalDateTime.now());
+        } else {
+            enderecoEntityFinal.setDataCriacao(LocalDateTime.now());
+        }
+        enderecoEntityFinal.setRua(endereco.getRua());
+        enderecoEntityFinal.setNumero(endereco.getNumero());
+        enderecoEntityFinal.setCep(endereco.getCep());
+        enderecoEntityFinal.setComplemento(endereco.getComplemento());
+        enderecoEntityFinal.setBairro(endereco.getBairro());
+        enderecoEntityFinal.setCidade(endereco.getCidade());
+        return enderecoEntityFinal;
     }
 
     public static void uuidValidator(UUID id) {

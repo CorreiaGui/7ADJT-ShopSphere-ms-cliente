@@ -70,7 +70,7 @@ public class ClienteController {
         Cliente clienteAtualizado = atualizarClientePorCpfUseCase.alterarClientePorCpf(cpf, cliente);
         ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(clienteAtualizado);
         log.info("PUT | {} | Finalizada alteracao de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
-        return ResponseEntity.status(201).body(clienteJsonResponse);
+        return ResponseEntity.status(200).body(clienteJsonResponse);
     }
 
     @DeleteMapping("/{cpf}")
