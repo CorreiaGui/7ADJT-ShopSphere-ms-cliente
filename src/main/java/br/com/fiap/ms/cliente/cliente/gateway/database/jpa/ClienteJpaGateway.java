@@ -55,7 +55,7 @@ public class ClienteJpaGateway implements ClienteGateway {
     public void excluirClientePorCpf(String cpf) {
         int result = clienteRepository.deleteByCpf(cpf);
         if (result == 0) {
-            throw new ResourceNotFoundException("Cliente não encontrado para exclusão");
+            throw new ResourceNotFoundException("Cliente não encontrado");
         }
     }
 }
