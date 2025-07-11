@@ -23,7 +23,7 @@ public class ClienteJpaGateway implements ClienteGateway {
 
     @Override
     public Optional<Cliente> buscarClientePorCpf(String cpf) {
-        ClienteEntity clienteEntity = clienteRepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        ClienteEntity clienteEntity = clienteRepository.findByCpf(cpf).orElse(null);
         return Optional.ofNullable(convertToCliente(clienteEntity));
     }
 

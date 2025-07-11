@@ -32,13 +32,7 @@ public class ClienteController {
     public ResponseEntity<ClienteJsonResponse> buscarClientePorCpf(@PathVariable("cpf") String cpf) {
         log.info("GET | {} | Iniciada busca de clientes pelo CPF | CPF: {}", V1_CLIENTES, cpf);
         Cliente cliente = buscarClientePorCpfUseCase.buscarClientePorCpf(cpf);
-        if (cliente == null) {
-            log.info("GET | {} | Finalizada busca de clientes pelo CPF | CPF: {} notFound", V1_CLIENTES, cpf);
-            return ResponseEntity.notFound().build();
-        }
-        log.info("Cliente encontrado: {}", cliente);
         ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(cliente);
-        log.info("clienteJson encontrado: {}", clienteJsonResponse);
         log.info("GET | {} | Finalizada busca de clientes pelo CPF | CPF: {} {}", V1_CLIENTES, cpf, clienteJsonResponse);
         return ResponseEntity.ok(clienteJsonResponse);
     }
