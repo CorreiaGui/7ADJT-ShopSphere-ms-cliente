@@ -8,6 +8,7 @@ import br.com.fiap.ms.cliente.cliente.usecase.*;
 import br.com.fiap.ms.cliente.cliente.utils.ClienteUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +56,7 @@ public class ClienteController {
         Optional<Cliente> novoCliente = criarClienteUseCase.criarCliente(cliente);
         ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(novoCliente.get());
         log.info("POST | {} | Finalizada criação de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
-        return ResponseEntity.status(201).body(clienteJsonResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteJsonResponse);
     }
 
     @PutMapping("/{cpf}")
@@ -65,7 +66,7 @@ public class ClienteController {
         Cliente clienteAtualizado = atualizarClientePorCpfUseCase.alterarClientePorCpf(cpf, cliente);
         ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(clienteAtualizado);
         log.info("PUT | {} | Finalizada alteracao de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
-        return ResponseEntity.status(200).body(clienteJsonResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteJsonResponse);
     }
 
     @DeleteMapping("/{cpf}")
