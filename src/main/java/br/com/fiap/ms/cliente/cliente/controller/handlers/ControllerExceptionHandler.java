@@ -1,7 +1,9 @@
 package br.com.fiap.ms.cliente.cliente.controller.handlers;
 
 import br.com.fiap.ms.cliente.cliente.exception.ResourceNotFoundException;
+import br.com.fiap.ms.cliente.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.ms.cliente.cliente.exception.dto.ResourceNotFoundDTO;
+import br.com.fiap.ms.cliente.cliente.exception.dto.UnprocessableEntityExceptionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,5 +21,12 @@ public class ControllerExceptionHandler {
         logger.error("ResourceNotFoundException ", e);
         var status = HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status.value()).body(new ResourceNotFoundDTO(e.getMessage(), status.value()));
+    }
+
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<UnprocessableEntityExceptionDTO> handlerUnprocessableEntityException(UnprocessableEntityException e) {
+        logger.error("UnprocessableEntityException ", e);
+        var status = HttpStatus.UNPROCESSABLE_ENTITY;
+        return ResponseEntity.status(status.value()).body(new UnprocessableEntityExceptionDTO(e.getMessage(), status.value()));
     }
 }

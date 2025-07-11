@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.fiap.ms.cliente.cliente.utils.ClienteUtils.convertToClienteJsonResponse;
 
@@ -51,8 +52,8 @@ public class ClienteController {
     public ResponseEntity<ClienteJsonResponse> criarCliente(@RequestBody ClienteJsonRequest clienteJsonRequest) {
         log.info("POST | {} | Iniciada criação de cliente | request: {}", V1_CLIENTES, clienteJsonRequest);
         Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
-        Cliente novoCliente = criarClienteUseCase.criarCliente(cliente);
-        ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(novoCliente);
+        Optional<Cliente> novoCliente = criarClienteUseCase.criarCliente(cliente);
+        ClienteJsonResponse clienteJsonResponse = convertToClienteJsonResponse(novoCliente.get());
         log.info("POST | {} | Finalizada criação de cliente | response: {}", V1_CLIENTES, clienteJsonResponse);
         return ResponseEntity.status(201).body(clienteJsonResponse);
     }
@@ -72,6 +73,6 @@ public class ClienteController {
         log.info("GET | {} | Iniciada exclusao de cliente pelo CPF | CPF: {}", V1_CLIENTES, cpf);
         excluirClientePorCpfUseCase.excluirClientePorCpf(cpf);
         log.info("GET | {} | Finalizada exclusao de cliente pelo CPF | CPF: {}", V1_CLIENTES, cpf);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

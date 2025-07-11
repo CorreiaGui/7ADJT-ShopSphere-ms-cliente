@@ -130,15 +130,14 @@ public class ClienteUtils {
     }
 
     public static ClienteJsonResponse convertToClienteJsonResponse(Cliente cliente){
-        ClienteJsonResponse clienteJsonResponse = new ClienteJsonResponse(
-                cliente.getCpf(),
-                cliente.getNome(),
-                cliente.getDataNascimento(),
-                cliente.getDataCriacao(),
-                cliente.getDataUltimaAlteracao(),
-                convertToEnderecoJsonResponse(cliente.getEndereco())
+        return new ClienteJsonResponse(
+            cliente.getCpf(),
+            cliente.getNome(),
+            cliente.getDataNascimento(),
+            cliente.getDataCriacao(),
+            cliente.getDataUltimaAlteracao(),
+            convertToEnderecoJsonResponse(cliente.getEndereco())
         );
-        return clienteJsonResponse;
     }
 
     public static EnderecoJsonResponse convertToEnderecoJsonResponse(Endereco endereco){
