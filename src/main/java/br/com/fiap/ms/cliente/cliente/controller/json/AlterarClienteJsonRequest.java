@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record AtualizarClienteJsonRequest(
+public record AlterarClienteJsonRequest(
     @NotNull(message = "CPF é obrigatório")
     @NotEmpty(message = "CPF não pode ser vazio")
     String cpf,
@@ -15,5 +15,5 @@ public record AtualizarClienteJsonRequest(
     @NotNull(message = "Data de nascimento é obrigatório")
     @NotEmpty(message = "Data de nascimento não pode ser vazio")
     LocalDate dataNascimento,
-    AtualizarEnderecoJsonRequest enderecoJsonRequest
+    AlterarEnderecoJsonRequest enderecoJsonRequest
 ) {}

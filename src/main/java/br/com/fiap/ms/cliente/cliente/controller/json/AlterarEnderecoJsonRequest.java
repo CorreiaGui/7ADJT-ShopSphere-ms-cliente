@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public record AtualizarEnderecoJsonRequest(
+public record AlterarEnderecoJsonRequest(
         @NotNull(message = "ID é obrigatório")
         @NotEmpty(message = "ID não pode ser vazio")
         UUID id,

@@ -1,6 +1,6 @@
 package br.com.fiap.ms.cliente.cliente.controller;
 
-import br.com.fiap.ms.cliente.cliente.controller.json.AtualizarClienteJsonRequest;
+import br.com.fiap.ms.cliente.cliente.controller.json.AlterarClienteJsonRequest;
 import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonRequest;
 import br.com.fiap.ms.cliente.cliente.controller.json.ClienteJsonResponse;
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
@@ -61,7 +61,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{cpf}")
-    public ResponseEntity<ClienteJsonResponse> alterarCliente(@PathVariable("cpf") String cpf, @RequestBody AtualizarClienteJsonRequest clienteJsonRequest) {
+    public ResponseEntity<ClienteJsonResponse> alterarCliente(@PathVariable("cpf") String cpf, @RequestBody AlterarClienteJsonRequest clienteJsonRequest) {
         log.info("PUT | {} | Iniciada alteracao de cliente | request: {}", V1_CLIENTES, clienteJsonRequest);
         Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
         Cliente clienteAtualizado = atualizarClientePorCpfUseCase.alterarClientePorCpf(cpf, cliente);

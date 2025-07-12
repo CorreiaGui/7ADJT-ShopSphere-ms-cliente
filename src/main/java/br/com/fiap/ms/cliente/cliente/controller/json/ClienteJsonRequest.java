@@ -13,7 +13,6 @@ public record ClienteJsonRequest(
     @NotEmpty(message = "Nome não pode ser vazio")
     String nome,
     @NotNull(message = "Data de nascimento é obrigatório")
-    @NotEmpty(message = "Data de nascimento não pode ser vazio")
     LocalDate dataNascimento,
     EnderecoJsonRequest enderecoJsonRequest
 ) {}

@@ -66,7 +66,7 @@ public class ClienteUtils {
             .build();
     }
 
-    public static Cliente convertToCliente(AtualizarClienteJsonRequest clienteJsonRequest) {
+    public static Cliente convertToCliente(AlterarClienteJsonRequest clienteJsonRequest) {
         Endereco endereco = Endereco.builder()
                 .id(clienteJsonRequest.enderecoJsonRequest().id())
                 .rua(clienteJsonRequest.enderecoJsonRequest().rua())
