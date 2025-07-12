@@ -8,7 +8,7 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.fiap.ms.cliente</groupId>
+	<groupId>br.com.fiap.shopsphere.ms</groupId>
 	<artifactId>cliente</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cliente</name>
