@@ -1,4 +1,4 @@
-package br.com.fiap.ms.cliente.cliente;
+package br.com.fiap.shopsphere.ms.cliente;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
