@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteJsonResponse> criarCliente(@RequestBody ClienteJsonRequest clienteJsonRequest) {
+    public ResponseEntity<ClienteJsonResponse> criarCliente(@Valid @RequestBody ClienteJsonRequest clienteJsonRequest) {
         log.info("POST | {} | Iniciada criação de cliente | request: {}", V1_CLIENTES, clienteJsonRequest);
         Cliente cliente = ClienteUtils.convertToCliente(clienteJsonRequest);
         Optional<Cliente> novoCliente = criarClienteUseCase.criarCliente(cliente);

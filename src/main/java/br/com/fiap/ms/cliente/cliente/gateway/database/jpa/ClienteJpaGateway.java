@@ -42,7 +42,6 @@ public class ClienteJpaGateway implements ClienteGateway {
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
             throw new UnprocessableEntityException("Cliente com CPF já cadastrado");
         }
-        uuidValidator(cliente.getEndereco().getId());
         try {
             clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
         } catch (Exception e) {
@@ -54,6 +53,7 @@ public class ClienteJpaGateway implements ClienteGateway {
     @Override
     public Optional<Cliente> alterarClientePorCpf(String cpf, Cliente cliente) {
         ClienteEntity clienteEntity = clienteRepository.findByCpf(cpf).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        uuidValidator(cliente.getEndereco().getId());
         ClienteEntity clienteAtualizado = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, clienteEntity));
         return Optional.ofNullable(ClienteUtils.convertToCliente(clienteAtualizado));
     }
