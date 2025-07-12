@@ -1,14 +1,15 @@
 package br.com.fiap.ms.cliente.cliente.usecase;
 
 import br.com.fiap.ms.cliente.cliente.domain.Cliente;
-import br.com.fiap.ms.cliente.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.ms.cliente.cliente.gateway.ClienteGateway;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class CriarClienteUseCase {
 

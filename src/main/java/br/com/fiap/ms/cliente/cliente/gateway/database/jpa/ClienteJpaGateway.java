@@ -10,7 +10,7 @@ import br.com.fiap.ms.cliente.cliente.utils.ClienteUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import static br.com.fiap.ms.cliente.cliente.utils.ClienteUtils.convertToCliente;
 
 @AllArgsConstructor
-@Component
+@Service
 public class ClienteJpaGateway implements ClienteGateway {
 
     private final ClienteRepository clienteRepository;
