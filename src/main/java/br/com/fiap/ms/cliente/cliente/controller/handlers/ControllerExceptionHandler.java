@@ -1,7 +1,9 @@
 package br.com.fiap.ms.cliente.cliente.controller.handlers;
 
+import br.com.fiap.ms.cliente.cliente.exception.ResourceExistingException;
 import br.com.fiap.ms.cliente.cliente.exception.ResourceNotFoundException;
 import br.com.fiap.ms.cliente.cliente.exception.UnprocessableEntityException;
+import br.com.fiap.ms.cliente.cliente.exception.dto.ResourceExistingExceptionDTO;
 import br.com.fiap.ms.cliente.cliente.exception.dto.ResourceNotFoundDTO;
 import br.com.fiap.ms.cliente.cliente.exception.dto.UnprocessableEntityExceptionDTO;
 import org.slf4j.Logger;
@@ -28,5 +30,12 @@ public class ControllerExceptionHandler {
         logger.error("UnprocessableEntityException ", e);
         var status = HttpStatus.UNPROCESSABLE_ENTITY;
         return ResponseEntity.status(status.value()).body(new UnprocessableEntityExceptionDTO(e.getMessage(), status.value()));
+    }
+
+    @ExceptionHandler(ResourceExistingException.class)
+    public ResponseEntity<ResourceExistingExceptionDTO> handlerResourceExistingException(ResourceExistingException e) {
+        logger.error("ResourceExistingException ", e);
+        var status = HttpStatus.UNPROCESSABLE_ENTITY;
+        return ResponseEntity.status(status.value()).body(new ResourceExistingExceptionDTO(e.getMessage(), status.value()));
     }
 }

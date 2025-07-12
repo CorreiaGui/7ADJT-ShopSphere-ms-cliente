@@ -37,6 +37,9 @@ public class ClienteJpaGateway implements ClienteGateway {
 
     @Override
     public Optional<Cliente> criarCliente(Cliente cliente) {
+        if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
+            throw new UnprocessableEntityException("Cliente com CPF já cadastrado");
+        }
         var clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
         if(clienteEntity == null) {
             throw new UnprocessableEntityException("Erro ao criar cliente");
