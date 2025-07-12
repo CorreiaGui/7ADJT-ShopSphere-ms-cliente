@@ -38,13 +38,15 @@ public class ClienteJpaGateway implements ClienteGateway {
 
     @Override
     public Optional<Cliente> criarCliente(Cliente cliente) {
+        ClienteEntity clienteEntity;
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
             throw new UnprocessableEntityException("Cliente com CPF já cadastrado");
         }
         uuidValidator(cliente.getEndereco().getId());
-        var clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
-        if(clienteEntity == null) {
-            throw new UnprocessableEntityException("Erro ao criar cliente");
+        try {
+            clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
+        } catch (Exception e) {
+            throw new UnprocessableEntityException("Erro ao criar cliente: " + e.getMessage());
         }
         return Optional.ofNullable(ClienteUtils.convertToCliente(clienteEntity));
     }
