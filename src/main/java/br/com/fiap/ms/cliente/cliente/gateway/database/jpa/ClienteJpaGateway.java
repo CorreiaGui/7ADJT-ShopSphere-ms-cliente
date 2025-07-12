@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static br.com.fiap.ms.cliente.cliente.utils.ClienteUtils.convertToCliente;
+import static br.com.fiap.ms.cliente.cliente.utils.ClienteUtils.uuidValidator;
 
 @AllArgsConstructor
 @Service
@@ -40,6 +41,7 @@ public class ClienteJpaGateway implements ClienteGateway {
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
             throw new UnprocessableEntityException("Cliente com CPF já cadastrado");
         }
+        uuidValidator(cliente.getEndereco().getId());
         var clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
         if(clienteEntity == null) {
             throw new UnprocessableEntityException("Erro ao criar cliente");
