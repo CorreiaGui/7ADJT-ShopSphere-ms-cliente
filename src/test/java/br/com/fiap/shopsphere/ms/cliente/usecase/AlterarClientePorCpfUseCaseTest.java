@@ -40,13 +40,12 @@ public class AlterarClientePorCpfUseCaseTest {
     void deveLancarExcecaoQuandoCpfNaoExistir() {
         String cpf = "12345678901";
         Cliente clienteAtualizado = new Cliente();
-        when(clienteGateway.buscarClientePorCpf(cpf)).thenReturn(Optional.empty());
+        when(clienteGateway.alterarClientePorCpf(anyString(), any())).thenReturn(Optional.empty());
 
         assertThrows(RecursoNaoEncontradoException.class, () -> {
             alterarClientePorCpfUseCase.alterarClientePorCpf(cpf, clienteAtualizado);
         });
 
-        verify(clienteGateway, times(1)).buscarClientePorCpf(cpf);
-        verify(clienteGateway, never()).alterarClientePorCpf(anyString(), any(Cliente.class));
+        verify(clienteGateway, times(1)).alterarClientePorCpf(anyString(), any(Cliente.class));
     }
 }
