@@ -1,4 +1,4 @@
-package br.com.fiap.ms.cliente.cliente;
+package br.com.fiap.shopsphere.ms.cliente;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class ClienteApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClienteApplication.class, args);
 	}
-
 }
