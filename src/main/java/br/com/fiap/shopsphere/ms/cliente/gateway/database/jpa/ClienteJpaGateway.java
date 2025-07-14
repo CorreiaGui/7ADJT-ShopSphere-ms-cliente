@@ -1,6 +1,7 @@
 package br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa;
 
 import br.com.fiap.shopsphere.ms.cliente.domain.Cliente;
+import br.com.fiap.shopsphere.ms.cliente.exception.RecursoExistenteException;
 import br.com.fiap.shopsphere.ms.cliente.exception.RecursoNaoEncontradoException;
 import br.com.fiap.shopsphere.ms.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.shopsphere.ms.cliente.gateway.ClienteGateway;
@@ -40,7 +41,7 @@ public class ClienteJpaGateway implements ClienteGateway {
     public Optional<Cliente> criarCliente(Cliente cliente) {
         ClienteEntity clienteEntity;
         if (clienteRepository.findByCpf(cliente.getCpf()).isPresent()) {
-            throw new UnprocessableEntityException("Cliente com CPF já cadastrado");
+            throw new RecursoExistenteException("Cliente com CPF já cadastrado");
         }
         try {
             clienteEntity = clienteRepository.save(ClienteUtils.convertToClienteEntity(cliente, null));
