@@ -4,6 +4,7 @@ import br.com.fiap.shopsphere.ms.cliente.controller.json.*;
 import br.com.fiap.shopsphere.ms.cliente.domain.Cliente;
 import br.com.fiap.shopsphere.ms.cliente.domain.Endereco;
 import br.com.fiap.shopsphere.ms.cliente.exception.RecursoNaoEncontradoException;
+import br.com.fiap.shopsphere.ms.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.EnderecoEntity;
 
@@ -81,17 +82,6 @@ public class ClienteUtils {
                 .nome(clienteJsonRequest.nome())
                 .dataNascimento(clienteJsonRequest.dataNascimento())
                 .endereco(endereco)
-                .build();
-    }
-
-    public static Endereco convertToEndereco(EnderecoJsonRequest enderecoJsonRequest) {
-        return Endereco.builder()
-                .rua(enderecoJsonRequest.rua())
-                .numero(enderecoJsonRequest.numero())
-                .cep(enderecoJsonRequest.cep())
-                .complemento(enderecoJsonRequest.complemento())
-                .bairro(enderecoJsonRequest.bairro())
-                .cidade(enderecoJsonRequest.cidade())
             .build();
     }
 
@@ -107,23 +97,6 @@ public class ClienteUtils {
                     .complemento(enderecoEntity.get().getComplemento())
                     .dataCriacao(enderecoEntity.get().getDataCriacao())
                     .dataUltimaAlteracao(enderecoEntity.get().getDataUltimaAlteracao())
-                .build();
-        }
-        return null;
-    }
-
-    public static Endereco convertToEndereco(EnderecoEntity enderecoEntity) {
-        if (enderecoEntity != null) {
-            return Endereco.builder()
-                    .id(enderecoEntity.getId())
-                    .rua(enderecoEntity.getRua())
-                    .numero(enderecoEntity.getNumero())
-                    .bairro(enderecoEntity.getBairro())
-                    .cidade(enderecoEntity.getCidade())
-                    .cep(enderecoEntity.getCep())
-                    .complemento(enderecoEntity.getComplemento())
-                    .dataCriacao(enderecoEntity.getDataCriacao())
-                    .dataUltimaAlteracao(enderecoEntity.getDataUltimaAlteracao())
                 .build();
         }
         return null;
@@ -191,7 +164,7 @@ public class ClienteUtils {
 
     public static void uuidValidator(UUID id) {
         if (!matches(REGEX_UUID, id.toString())) {
-            throw new RecursoNaoEncontradoException(ID_INVALIDO);
+            throw new UnprocessableEntityException(ID_INVALIDO);
         }
     }
 }

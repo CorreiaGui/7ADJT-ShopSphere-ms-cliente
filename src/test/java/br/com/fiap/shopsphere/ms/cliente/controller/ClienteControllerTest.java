@@ -4,7 +4,6 @@ import br.com.fiap.shopsphere.ms.cliente.controller.json.*;
 import br.com.fiap.shopsphere.ms.cliente.domain.Cliente;
 import br.com.fiap.shopsphere.ms.cliente.domain.Endereco;
 import br.com.fiap.shopsphere.ms.cliente.usecase.*;
-import br.com.fiap.shopsphere.ms.cliente.utils.ClienteUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
