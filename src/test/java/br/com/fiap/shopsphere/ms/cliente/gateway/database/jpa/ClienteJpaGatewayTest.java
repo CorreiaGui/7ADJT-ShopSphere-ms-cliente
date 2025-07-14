@@ -8,7 +8,6 @@ import br.com.fiap.shopsphere.ms.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.EnderecoEntity;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.repository.ClienteRepository;
-import br.com.fiap.shopsphere.ms.cliente.utils.ClienteUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
