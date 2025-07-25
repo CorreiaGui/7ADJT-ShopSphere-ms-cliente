@@ -168,4 +168,73 @@ class ClienteUtilsTest {
 
         return Optional.of(cliente);
     }
+
+    @Test
+    void testConvertToClienteFromEntityNull() {
+        Cliente cliente = ClienteUtils.convertToCliente((ClienteEntity) null);
+        assertNull(cliente);
+    }
+
+    @Test
+    void testConvertToEnderecoEntityWithNullEnderecoEntity() {
+        Endereco endereco = Endereco.builder()
+                .rua("Rua Exemplo")
+                .numero(100)
+                .cep("12345-678")
+                .complemento("Apto 10")
+                .bairro("Centro")
+                .cidade("Cidade Exemplo")
+                .build();
+
+        EnderecoEntity entity = ClienteUtils.convertToEnderecoEntity(endereco, null);
+
+        assertNotNull(entity);
+        assertEquals("Rua Exemplo", entity.getRua());
+        assertNotNull(entity.getDataCriacao());
+        assertNull(entity.getId());
+    }
+
+    @Test
+    void testConvertToClienteEntityWithNullClienteEntity() {
+        Cliente cliente = criarMockOptionalCliente().get();
+
+        ClienteEntity result = ClienteUtils.convertToClienteEntity(cliente, null);
+
+        assertNotNull(result);
+        assertEquals(cliente.getCpf(), result.getCpf());
+        assertNotNull(result.getDataCriacao());
+        assertNotNull(result.getEndereco());
+    }
+
+    @Test
+    void testConvertToClienteFromClienteJsonRequest() {
+        EnderecoJsonRequest enderecoJson = new EnderecoJsonRequest(
+                 "Rua Exemplo", 100, "12345-678", "Apto 10", "Centro", "Cidade Exemplo");
+
+        ClienteJsonRequest request = new ClienteJsonRequest("12345678901", "Fulano", LocalDate.of(1990, 1, 1), enderecoJson);
+
+        Cliente cliente = ClienteUtils.convertToCliente(request);
+
+        assertNotNull(cliente);
+        assertEquals("12345678901", cliente.getCpf());
+        assertEquals("Fulano", cliente.getNome());
+        assertEquals("Rua Exemplo", cliente.getEndereco().getRua());
+    }
+
+    @Test
+    void testConvertToClienteFromAlterarClienteJsonRequest() {
+        AlterarEnderecoJsonRequest enderecoJson = new AlterarEnderecoJsonRequest(
+                UUID.randomUUID(), "Rua Exemplo", 100, "12345-678", "Apto 10", "Centro", "Cidade Exemplo");
+
+        AlterarClienteJsonRequest request = new AlterarClienteJsonRequest("12345678901", "Fulano", LocalDate.of(1990, 1, 1), enderecoJson);
+
+        Cliente cliente = ClienteUtils.convertToCliente(request);
+
+        assertNotNull(cliente);
+        assertEquals("12345678901", cliente.getCpf());
+        assertEquals("Fulano", cliente.getNome());
+        assertEquals("Rua Exemplo", cliente.getEndereco().getRua());
+    }
+
+
 }

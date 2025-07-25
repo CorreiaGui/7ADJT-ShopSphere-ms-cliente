@@ -3,7 +3,6 @@ package br.com.fiap.shopsphere.ms.cliente.utils;
 import br.com.fiap.shopsphere.ms.cliente.controller.json.*;
 import br.com.fiap.shopsphere.ms.cliente.domain.Cliente;
 import br.com.fiap.shopsphere.ms.cliente.domain.Endereco;
-import br.com.fiap.shopsphere.ms.cliente.exception.RecursoNaoEncontradoException;
 import br.com.fiap.shopsphere.ms.cliente.exception.UnprocessableEntityException;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.ClienteEntity;
 import br.com.fiap.shopsphere.ms.cliente.gateway.database.jpa.entity.EnderecoEntity;
